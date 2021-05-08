@@ -34,7 +34,7 @@ const run = (args) => {
   /* Basic server set up */
   const app = express();
   app.set('port', process.env.PORT || 4000);
-  app.set('host', process.env.HOST || "localhost");
+  app.set('host', process.env.HOST || "0.0.0.0");
 
   const baseDir = path.resolve(__dirname, "..");
   utils.verbose(`Serving index / favicon etc from  "${baseDir}"`);
