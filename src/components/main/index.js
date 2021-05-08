@@ -23,6 +23,7 @@ import ErrorBoundary from "../../util/errorBoundry";
 import Spinner from "../framework/spinner";
 import MainDisplayMarkdown from "../narrative/MainDisplayMarkdown";
 import MobileNarrativeDisplay from "../narrative/MobileNarrativeDisplay";
+import Variants from "../variants";
 
 const Entropy = lazy(() => import("../entropy"));
 const Frequencies = lazy(() => import("../frequencies"));
@@ -142,17 +143,18 @@ class Main extends React.Component {
             renderNarrativeToggle(this.props.dispatch, this.props.displayNarrative) : null
           }
           {this.props.displayNarrative || this.props.showOnlyPanels ? null : <Info width={calcUsableWidth(availableWidth, 1)} />}
+          {this.props.panelsToDisplay.includes("frequencies") && this.props.frequenciesLoaded ?
+            (<Suspense fallback={null}>
+              <Frequencies width={chart.width} height={chart.height} key={this.props.treeName+"_frequencies"}/>
+            </Suspense>) :
+            null
+          }
+          {this.props.displayNarrative ? null : <Variants width={chart.width} height={chart.height} />}
           {this.props.panelsToDisplay.includes("tree") ? <Tree width={big.width} height={big.height} key={this.props.treeName} /> : null}
           {this.props.panelsToDisplay.includes("map") ? <Map width={big.width} height={big.height} key={this.props.treeName+"_map"} justGotNewDatasetRenderNewMap={false} legend={this.shouldShowMapLegend()} /> : null}
           {this.props.panelsToDisplay.includes("entropy") ?
             (<Suspense fallback={null}>
               <Entropy width={chart.width} height={chart.height} key={this.props.treeName+"_entropy"}/>
-            </Suspense>) :
-            null
-          }
-          {this.props.panelsToDisplay.includes("frequencies") && this.props.frequenciesLoaded ?
-            (<Suspense fallback={null}>
-              <Frequencies width={chart.width} height={chart.height} key={this.props.treeName+"_frequencies"}/>
             </Suspense>) :
             null
           }
