@@ -156,7 +156,7 @@ class Main extends React.Component {
             </Suspense>) :
             null
           }
-          {this.props.displayNarrative || this.props.showOnlyPanels ? null : <Footer width={calcUsableWidth(availableWidth, 1)} />}
+          {/* {this.props.displayNarrative || this.props.showOnlyPanels ? null : <Footer width={calcUsableWidth(availableWidth, 1)} />} */}
           {this.props.displayNarrative ? null : <FinePrint width={calcUsableWidth(availableWidth, 1)} />}
           {this.props.displayNarrative && this.props.panelsToDisplay.includes("MainDisplayMarkdown") ?
             <MainDisplayMarkdown width={calcUsableWidth(availableWidth, 1)}/> :
