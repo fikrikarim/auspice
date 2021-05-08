@@ -122,6 +122,10 @@ const run = (args) => {
     handlerMsg = loadAndAddHandlers({app, handlersArg: args.handlers, datasetDir: args.datasetDir, narrativeDir: args.narrativeDir});
   }
 
+  app.get("/", (req, res) => {
+    res.redirect("/ncov/indonesia");
+  });
+
   /* this must be the last "get" handler, else the "*" swallows all other requests */
   app.get("*", (req, res) => {
     res.sendFile(path.join(auspiceBuild.baseDir, "dist/index.html"), {headers: {"Cache-Control": "no-cache, no-store, must-revalidate"}});
