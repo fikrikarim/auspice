@@ -309,7 +309,7 @@ export default Controls;
 
 function getInitialSidebarState() {
   return {
-    sidebarOpen: false,
+    sidebarOpen: window.innerWidth > controlsHiddenWidth,
     setDefault: false
   };
 }
