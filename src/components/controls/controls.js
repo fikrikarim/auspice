@@ -28,7 +28,7 @@ function Controls({mapOn, frequenciesOn, mobileDisplay}) {
 
   return (
     <ControlsContainer>
-      <ChooseDataset />
+      {/* <ChooseDataset /> */}
 
       <AnnotatedHeader title={t("sidebar:Date Range")} tooltip={DateRangeInfo} mobile={mobileDisplay}/>
       <DateRangeInputs />
