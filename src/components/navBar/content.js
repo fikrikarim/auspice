@@ -17,12 +17,13 @@ const Title = styled.a`
   font-size: 20px;
   font-weight: 400;
   cursor: pointer;
-  letter-spacing: 1rem;
+  letter-spacing: 0.5rem;
 `;
 const LogoLink = styled.a`
   padding: 5px 5px;
   width: 50px;
   cursor: pointer;
+  transform: rotate(180deg);
 `;
 const NarrativeTitle = styled.div`
   white-space: nowrap;
@@ -47,7 +48,7 @@ const renderTitle = (narrativeTitle, width) => {
   }
   return (
     <Title href="/">
-      {"auspice"}
+      {"Varian.id"}
     </Title>
   );
 };
