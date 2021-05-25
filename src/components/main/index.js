@@ -173,6 +173,7 @@ class Main extends React.Component {
           {this.props.displayNarrative || this.props.showOnlyPanels ? null : (
             <Info width={calcUsableWidth(availableWidth, 1)} />
           )}
+          {this.props.displayNarrative ? null : <Case width={chart.width} height={chart.height} />}
           {this.props.panelsToDisplay.includes("frequencies") && this.props.frequenciesLoaded ? (
             <Suspense fallback={null}>
               <Frequencies
@@ -185,7 +186,6 @@ class Main extends React.Component {
           {this.props.displayNarrative ? null : (
             <Variants width={chart.width} height={chart.height} />
           )}
-          {this.props.displayNarrative ? null : <Case width={chart.width} height={chart.height} />}
           {this.props.panelsToDisplay.includes("tree") ? (
             <Tree width={big.width} height={big.height} key={this.props.treeName} />
           ) : null}
