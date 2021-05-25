@@ -46,7 +46,7 @@ function Case(props) {
     ],
   };
 
-  const options = {
+  const getOptions = (title) => ({
     scales: {
       case: {
         type: "linear",
@@ -61,11 +61,83 @@ function Case(props) {
       },
     },
     maintainAspectRatio: true,
+    plugins: {
+      title: {
+        display: true,
+        text: title,
+      },
+    },
+  });
+
+  const genderData = {
+    labels: ["Laki-laki", "Perempuan", "Unknown"],
+    datasets: [
+      {
+        label: ["Persentase Kasus Positif"],
+        data: [48.81, 51.18, 2.28],
+        backgroundColor: ["rgba(255, 99, 132, 0.2)"],
+        borderColor: ["rgba(255, 99, 132, 1)"],
+        borderWidth: 1,
+      },
+      {
+        label: ["Persentase Sequences GISAID"],
+        backgroundColor: ["rgba(75, 192, 192, 0.2)"],
+        borderColor: ["rgba(75, 192, 192, 1)"],
+        data: [46.51, 52.1, 1.37],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const ageData = {
+    labels: ["0-5", "6-18", "19-30", "31-45", "46-59", "≥ 60", "Unknown"],
+    datasets: [
+      {
+        label: ["Persentase Kasus Positif"],
+        data: [2.84, 9.54, 24.63, 29.12, 22.53, 11.3, 1.61],
+        backgroundColor: ["rgba(255, 99, 132, 0.2)"],
+        borderColor: ["rgba(255, 99, 132, 1)"],
+        borderWidth: 1,
+      },
+      {
+        label: ["Persentase Sequences GISAID"],
+        data: [1.55, 4.8, 26.04, 30.69, 21.86, 13.25, 1.78],
+        backgroundColor: ["rgba(75, 192, 192, 0.2)"],
+        borderColor: ["rgba(75, 192, 192, 1)"],
+        borderWidth: 1,
+      },
+    ],
   };
 
   return (
-    <Card title="Case" style={{ fontSize: "14px" }}>
-      <Bar data={data} options={options} width={props.width} height={400} />
+    <Card title="Case" style={{ fontSize: "14px", display: "block" }}>
+      <div>
+        <Bar
+          data={data}
+          options={getOptions("Data Per Provinsi")}
+          width={props.width}
+          height={400}
+        />
+
+        <div style={{ display: "flex" }}>
+          <div style={{ flexGrow: 1, marginRight: "20px" }}>
+            <Bar
+              data={genderData}
+              options={getOptions("Data Jenis Kelamin")}
+              width={props.width / 2}
+              height={250}
+            />
+          </div>
+          <div style={{ flexGrow: 1 }}>
+            <Bar
+              data={ageData}
+              options={getOptions("Data Kelompok Umur")}
+              width={props.width / 2}
+              height={250}
+            />
+          </div>
+        </div>
+      </div>
     </Card>
   );
 }
