@@ -46,17 +46,26 @@ function Case(props) {
     ],
   };
 
-  const getOptions = (title) => ({
+  const getOptions = ({ title, firstAxisName, secondAxisName, enableSecondAxis }) => ({
     scales: {
       case: {
         type: "linear",
         position: "left",
+        title: {
+          display: true,
+          text: firstAxisName,
+        },
       },
       sequence: {
+        display: enableSecondAxis || false,
         type: "linear",
         position: "right",
         grid: {
           display: false,
+        },
+        title: {
+          display: true,
+          text: secondAxisName,
         },
       },
     },
@@ -111,28 +120,33 @@ function Case(props) {
 
   return (
     <Card title="Case" style={{ fontSize: "14px", display: "block" }}>
-      <div>
+      <div style={{ paddingRight: "20px", maxWidth: "100%" }}>
         <Bar
           data={data}
-          options={getOptions("Data Per Provinsi")}
+          options={getOptions({
+            title: "Data Per Provinsi",
+            firstAxisName: "Jumlah Kasus",
+            secondAxisName: "Jumlah Sequence GISAID",
+            enableSecondAxis: true,
+          })}
           width={props.width}
           height={400}
         />
 
-        <div style={{ display: "flex" }}>
-          <div style={{ flexGrow: 1, marginRight: "20px" }}>
+        <div style={{ display: "flex", maxWidth: "100%" }}>
+          <div style={{ marginRight: "20px" }}>
             <Bar
               data={genderData}
-              options={getOptions("Data Jenis Kelamin")}
-              width={props.width / 2}
+              options={getOptions({ title: "Data Jenis Kelamin" })}
+              width={props.width / 2 - 10}
               height={250}
             />
           </div>
-          <div style={{ flexGrow: 1 }}>
+          <div style={{}}>
             <Bar
               data={ageData}
-              options={getOptions("Data Kelompok Umur")}
-              width={props.width / 2}
+              options={getOptions({ title: "Data Kelompok Umur" })}
+              width={props.width / 2 - 10}
               height={250}
             />
           </div>
