@@ -183,9 +183,9 @@ class Main extends React.Component {
               />
             </Suspense>
           ) : null}
-          {this.props.displayNarrative ? null : (
+          {/* {this.props.displayNarrative ? null : (
             <Variants width={chart.width} height={chart.height} />
-          )}
+          )} */}
           {this.props.panelsToDisplay.includes("tree") ? (
             <Tree width={big.width} height={big.height} key={this.props.treeName} />
           ) : null}
