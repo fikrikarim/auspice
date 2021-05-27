@@ -6,8 +6,8 @@ import Card from "../framework/card";
 
 const API_URL = "/charon/getDataset?prefix=/prov";
 const sequences = [
-  332, 320, 31, 129, 6, 22, 1, 115, 23, 50, 100, 11, 35, 0, 1, 11, 3, 1, 9, 8, 0, 2, 0, 7, 2, 1, 17,
-  1, 3, 5, 3, 23, 2, 1,
+  369, 327, 45, 153, 9, 22, 8, 115, 345, 50, 100, 26, 52, 23, 24, 11, 3, 1, 9, 8, 8, 2, 4, 7, 8, 3,
+  17, 1, 3, 5, 3, 23, 3, 1,
 ];
 
 function Case(props) {
@@ -36,8 +36,8 @@ function Case(props) {
         yAxisID: "case",
       },
       {
-        label: ["Jumlah Sequence GISAID"],
-        data: sequences,
+        label: ["% Sekuens GISAID/Jumlah Kasus"],
+        data: sequences.map((totalSeq, i) => (totalSeq / prov?.list_data[i].jumlah_kasus) * 100),
         backgroundColor: ["rgba(75, 192, 192, 0.2)"],
         borderColor: ["rgba(75, 192, 192, 1)"],
         borderWidth: 1,
@@ -83,7 +83,7 @@ function Case(props) {
     datasets: [
       {
         label: ["Persentase Kasus Positif"],
-        data: [48.81, 51.18, 2.28],
+        data: [47.7, 50.09, 2.26],
         backgroundColor: ["rgba(255, 99, 132, 0.2)"],
         borderColor: ["rgba(255, 99, 132, 1)"],
         borderWidth: 1,
@@ -92,7 +92,7 @@ function Case(props) {
         label: ["Persentase Sequences GISAID"],
         backgroundColor: ["rgba(75, 192, 192, 0.2)"],
         borderColor: ["rgba(75, 192, 192, 1)"],
-        data: [46.51, 52.1, 1.37],
+        data: [48.48, 50.61, 0.89],
         borderWidth: 1,
       },
     ],
@@ -103,14 +103,14 @@ function Case(props) {
     datasets: [
       {
         label: ["Persentase Kasus Positif"],
-        data: [2.84, 9.54, 24.63, 29.12, 22.53, 11.3, 1.61],
+        data: [2.84, 9.55, 24.63, 29.1, 22.53, 11.32, 1.6],
         backgroundColor: ["rgba(255, 99, 132, 0.2)"],
         borderColor: ["rgba(255, 99, 132, 1)"],
         borderWidth: 1,
       },
       {
         label: ["Persentase Sequences GISAID"],
-        data: [1.55, 4.8, 26.04, 30.69, 21.86, 13.25, 1.78],
+        data: [1.52, 4.85, 26.29, 28.49, 22.06, 13.37, 3.38],
         backgroundColor: ["rgba(75, 192, 192, 0.2)"],
         borderColor: ["rgba(75, 192, 192, 1)"],
         borderWidth: 1,
@@ -126,7 +126,7 @@ function Case(props) {
           options={getOptions({
             title: "Data Per Provinsi",
             firstAxisName: "Jumlah Kasus",
-            secondAxisName: "Jumlah Sequence GISAID",
+            secondAxisName: "% Sekuens GISAID/Jumlah Kasus",
             enableSecondAxis: true,
           })}
           width={props.width}
