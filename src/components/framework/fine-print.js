@@ -104,6 +104,7 @@ class FinePrint extends React.Component {
           <Flex className='finePrint'>
             {getCitation()}
           </Flex>
+          <Flex>Data made available through GISAID EpiCoV™.</Flex>
         </div>
       </FinePrintStyles>
     );
