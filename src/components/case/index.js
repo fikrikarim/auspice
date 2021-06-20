@@ -6,10 +6,6 @@ import Card from "../framework/card";
 
 const PROV_API = "/charon/getDataset?prefix=/prov";
 const SAMPLING_API = "/charon/getDataset?prefix=/sampling";
-const sequences = [
-  540, 434, 144, 169, 9, 8, 22, 148, 52, 100, 352, 31, 52, 23, 24, 11, 8, 1, 3, 2, 9, 8, 4, 10, 7,
-  17, 3, 3, 1, 5, 3, 23, 3, 1,
-];
 
 function Case(props) {
   const [prov, setProv] = useState(null);
@@ -28,11 +24,11 @@ function Case(props) {
   }, []);
 
   const data = {
-    labels: prov?.list_data.map(({ key }) => key),
+    labels: prov?.map(({ key }) => key),
     datasets: [
       {
         label: ["Jumlah Kasus"],
-        data: prov?.list_data.map(({ jumlah_kasus }) => jumlah_kasus),
+        data: prov?.map(({ jumlah_kasus }) => jumlah_kasus),
         backgroundColor: ["rgba(255, 99, 132, 0.2)"],
         borderColor: ["rgba(255, 99, 132, 1)"],
         borderWidth: 1,
@@ -40,7 +36,7 @@ function Case(props) {
       },
       {
         label: ["% Sekuens GISAID/Jumlah Kasus"],
-        data: sequences.map((totalSeq, i) => (totalSeq / prov?.list_data[i].jumlah_kasus) * 100),
+        data: prov?.map(({ sequences, jumlah_kasus }) => (sequences / jumlah_kasus) * 100),
         backgroundColor: ["rgba(75, 192, 192, 0.2)"],
         borderColor: ["rgba(75, 192, 192, 1)"],
         borderWidth: 1,
