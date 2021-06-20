@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { Bar } from "react-chartjs-2";
+import { Bar, Line } from "react-chartjs-2";
 
 import Card from "../framework/card";
 
-const API_URL = "/charon/getDataset?prefix=/prov";
+const PROV_API = "/charon/getDataset?prefix=/prov";
+const SAMPLING_API = "/charon/getDataset?prefix=/sampling";
 const sequences = [
   540, 434, 144, 169, 9, 8, 22, 148, 52, 100, 352, 31, 52, 23, 24, 11, 8, 1, 3, 2, 9, 8, 4, 10, 7,
   17, 3, 3, 1, 5, 3, 23, 3, 1,
@@ -12,13 +13,15 @@ const sequences = [
 
 function Case(props) {
   const [prov, setProv] = useState(null);
+  const [sampling, setSampling] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
-      const res = await fetch(API_URL);
-      const json = await res.json();
+      const provRes = await fetch(PROV_API);
+      setProv(await provRes.json());
 
-      setProv(json);
+      const samplingRes = await fetch(SAMPLING_API);
+      setSampling(await samplingRes.json());
     }
 
     fetchData();
@@ -78,42 +81,14 @@ function Case(props) {
     },
   });
 
-  const genderData = {
-    labels: ["Laki-laki", "Perempuan", "Unknown"],
+  const samplingData = {
+    labels: sampling?.map(({ key }) => key),
     datasets: [
       {
-        label: ["Persentase Kasus Positif"],
-        data: [47.7, 50.09, 2.26],
-        backgroundColor: ["rgba(255, 99, 132, 0.2)"],
-        borderColor: ["rgba(255, 99, 132, 1)"],
-        borderWidth: 1,
-      },
-      {
-        label: ["Persentase Sequences GISAID"],
+        label: "Jumlah sekuens GISAID Indonesia",
         backgroundColor: ["rgba(75, 192, 192, 0.2)"],
         borderColor: ["rgba(75, 192, 192, 1)"],
-        data: [48.48, 50.61, 0.89],
-        borderWidth: 1,
-      },
-    ],
-  };
-
-  const ageData = {
-    labels: ["0-5", "6-18", "19-30", "31-45", "46-59", "≥ 60", "Unknown"],
-    datasets: [
-      {
-        label: ["Persentase Kasus Positif"],
-        data: [2.84, 9.55, 24.63, 29.1, 22.53, 11.32, 1.6],
-        backgroundColor: ["rgba(255, 99, 132, 0.2)"],
-        borderColor: ["rgba(255, 99, 132, 1)"],
-        borderWidth: 1,
-      },
-      {
-        label: ["Persentase Sequences GISAID"],
-        data: [1.52, 4.85, 26.29, 28.49, 22.06, 13.37, 3.38],
-        backgroundColor: ["rgba(75, 192, 192, 0.2)"],
-        borderColor: ["rgba(75, 192, 192, 1)"],
-        borderWidth: 1,
+        data: sampling?.map(({ count }) => count),
       },
     ],
   };
@@ -133,24 +108,7 @@ function Case(props) {
           height={400}
         />
 
-        <div style={{ display: "flex", maxWidth: "100%" }}>
-          <div style={{ marginRight: "20px" }}>
-            <Bar
-              data={genderData}
-              options={getOptions({ title: "Data Jenis Kelamin" })}
-              width={props.width / 2 - 10}
-              height={250}
-            />
-          </div>
-          <div style={{}}>
-            <Bar
-              data={ageData}
-              options={getOptions({ title: "Data Kelompok Umur" })}
-              width={props.width / 2 - 10}
-              height={250}
-            />
-          </div>
-        </div>
+        <Line data={samplingData} width={props.width} height={400} />
       </div>
     </Card>
   );
